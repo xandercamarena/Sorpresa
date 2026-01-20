@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Historia - 3 Meses de Amor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-paper: #f9f5f0;
+            --ink: #2c2421;
+            --accent: #b07d62;
+            --soft-gold: #d4af37;
+        }
+
+        body {
+            background-color: var(--bg-paper);
+            color: var(--ink);
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            cursor: pointer;
+        }
+
+        .font-script { font-family: 'Mrs Saint Delafield', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+
+        /* Fondo de textura de papel antiguo */
+        .paper-texture {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/paper.png');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Partículas: Pétalos de flor de cerezo */
+        .petal {
+            position: fixed;
+            background: #f8d7da;
+            border-radius: 150% 0 150% 0;
+            z-index: 10;
+            pointer-events: none;
+            animation: fall-rotate linear infinite;
+        }
+
+        @keyframes fall-rotate {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Estética de Galería de Arte */
+        .art-frame {
+            background: white;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .art-frame img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(20%) sepia(10%);
+            transition: filter 0.5s ease;
+        }
+
+        .art-frame:hover {
+            transform: translateY(-15px) scale(1.05) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(176, 125, 98, 0.2);
+        }
+
+        .art-frame:hover img {
+            filter: grayscale(0%) sepia(0%);
+        }
+
+        /* Líneas de conexión románticas */
+        .love-line {
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        /* Carta de amor manuscrita */
+        .handwritten-letter {
+            background: #fff;
+            padding: 4rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border-left: 5px solid var(--accent);
+            transform: rotate(-1deg);
+        }
+
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Mosaico dinámico */
+        .mosaic-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body onclick="startMusic()">
+
+    <div class="paper-texture"></div>
+    <div id="petals-container"></div>
+
+    <!-- AUDIO OCULTO -->
+    <audio id="bg-music" loop preload="auto">
+        <!-- Reemplaza este link por el de tu canción favorita (.mp3 o .m4a) -->
+        <source src="Page.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <!-- SECCIÓN DE BIENVENIDA -->
+    <section class="h-screen flex flex-col items-center justify-center text-center px-4">
+        <div class="fade-up visible">
+            <p class="font-script text-6xl md:text-8xl text-accent mb-4">Los dos por siempre...</p>
+            <h1 class="font-serif italic text-4xl md:text-6xl tracking-widest uppercase mb-12">
+                Tres Meses de <span class="font-bold">Magia</span>
+            </h1>
+            
+            <div class="love-line mb-12"></div>
+            
+            <div class="flex space-x-12 font-serif italic text-2xl md:text-4xl text-ink/70">
+                <div class="flex flex-col">
+                    <span id="days">00</span>
+                    <span class="text-xs uppercase tracking-widest mt-2">Días</span>
+                </div>
+                <div class="flex flex-col">
+                    <span id="hours">00</span>
+                    <span class="text-xs uppercase tracking-widest mt-2">Horas</span>
+                </div>
+                <div class="flex flex-col">
+                    <span id="mins">00</span>
+                    <span class="text-xs uppercase tracking-widest mt-2">Minutos</span>
+                </div>
+            </div>
+
+            <p class="mt-20 font-serif italic text-lg opacity-40 italic">Desde el 21 de Octubre de 2025</p>
+            <p class="mt-2 font-serif text-accent tracking-widest text-sm uppercase">Hacia nuestro tercer mes juntitos</p>
+        </div>
+    </section>
+
+    <!-- GALERÍA DE RECUERDOS DESTACADOS -->
+    <section class="py-32 px-6 max-w-6xl mx-auto space-y-32">
+        <!-- Recuerdo 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+            <div class="fade-up">
+                <div class="art-frame" style="transform: rotate(-2deg)">
+                    <img src="Magico.jpg" alt="Manos entrelazadas">
+                    <p class="mt-4 font-script text-4xl text-accent">Donde todo comenzó</p>
+                </div>
+            </div>
+            <div class="fade-up text-center md:text-left">
+                <h3 class="font-serif text-3xl italic mb-6">Eres mi mas hermosa coincidencia</h3>
+                <p class="font-light leading-loose opacity-70">
+                    Aquel día que note tu hermosa sonrisa, cada momento, cada instante. Era todo lo que queria en el mundo. Lo que empezó como un encuentro se convirtió en la melodía más dulce que mi corazón ha escuchado jamás.
+                </p>
+            </div>
+        </div>
+
+        <!-- Recuerdo 2 (Imagen a la derecha) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+            <div class="fade-up text-center md:text-right order-2 md:order-1">
+                <h3 class="font-serif text-3xl italic mb-6">Nuestras Aventuras</h3>
+                <p class="font-light leading-loose opacity-70">
+                    Cada viaje, cada paseo, cada risa compartida ha sido un capítulo inolvidable en nuestro libro de amor. Juntos vamos a explorar no solo el mundo, sino también los rincones más profundos de nuestros corazones, y aunque no hubiese viajado contigo siempre estuve en tu corazón.
+                </p>
+            </div>
+            <div class="fade-up order-1 md:order-2">
+                <div class="art-frame" style="transform: rotate(3deg)">
+                    <img src="Aventuras.jpg" alt="Aventura juntos">
+                    <p class="mt-4 font-script text-4xl text-accent text-right">Cómplices de vida</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recuerdo 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+            <div class="fade-up">
+                <div class="art-frame" style="transform: rotate(-1deg)">
+                    <img src="Mirada.jpg" alt="Momento especial">
+                    <p class="mt-4 font-script text-4xl text-accent">Miradas que lo dicen todo</p>
+                </div>
+            </div>
+            <div class="fade-up text-center md:text-left">
+                <h3 class="font-serif text-3xl italic mb-6">Mi Corazón Late Fuerte por Tí</h3>
+                <p class="font-light leading-loose opacity-70">
+                    Cada vez que nuestros ojos se encuentran, siento que el mundo se detiene por un instante. Es en esos momentos cuando comprendo que mi amor por ti es más profundo de lo que jamás imaginé. Eres mi inspiración, mi alegría y la razón por la que sonrío cada día.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MOSAICO DE MOMENTOS -->
+    <section class="py-24 bg-white/20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 fade-up">
+                <h2 class="font-serif italic text-4xl mb-4">Mi vida a tu Lado</h2>
+                <div class="w-24 h-[1px] bg-accent mx-auto mb-8"></div>
+                <p class="font-script text-5xl text-accent">Cada foto, es un recuerdo de nuestra historia que recien comienza</p>
+            </div>
+
+            <div class="mosaic-container">
+                <div class="fade-up art-frame" style="transform: rotate(3deg); transition-delay: 100ms;">
+                    <img src="Risas.jpg" alt="Momento 1">
+                    <p class="mt-2 font-script text-2xl text-accent text-center">Risas</p>
+                </div>
+                <div class="fade-up art-frame" style="transform: rotate(-4deg); transition-delay: 200ms;">
+                    <img src="Paz.jpg" alt="Momento 2">
+                    <p class="mt-2 font-script text-2xl text-accent text-center">Eres mi Paz</p>
+                </div>
+                <div class="fade-up art-frame" style="transform: rotate(2deg); transition-delay: 300ms;">
+                    <img src="Momentos.jpg" alt="Momento 3">
+                    <p class="mt-2 font-script text-2xl text-accent text-center">Momentos que nunca olvidare</p>
+                </div>
+                <div class="fade-up art-frame" style="transform: rotate(-2deg); transition-delay: 400ms;">
+                    <img src="Complices.jpg" alt="Momento 4">
+                    <p class="mt-2 font-script text-2xl text-accent text-center">Cómplices</p>
+                </div>
+                <div class="fade-up art-frame" style="transform: rotate(5deg); transition-delay: 500ms;">
+                    <img src="Felicidad.jpg" alt="Momento 5">
+                    <p class="mt-2 font-script text-2xl text-accent text-center">Mi felicidad</p>
+                </div>
+                <div class="fade-up art-frame" style="transform: rotate(-3deg); transition-delay: 600ms;">
+                    <img src="Miradas.jpg" alt="Momento 6">
+                    <p class="mt-2 font-script text-2xl text-accent text-center">Tus Miradas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POESÍA -->
+    <section class="py-40 text-center px-6">
+        <div class="max-w-4xl mx-auto fade-up">
+            <span class="text-xs tracking-[1em] opacity-30 uppercase mb-8 block">No hay nada mas importante en mi vida que tu mi amor</span>
+            <p class="font-serif italic text-3xl md:text-5xl leading-snug">
+                "Eres el poema que nunca supe <span class="text-accent">cómo escribir</span>, pero que ahora no puedo dejar de leer."
+            </p>
+            <div class="love-line mt-12" style="height: 80px"></div>
+        </div>
+    </section>
+
+    <!-- CARTA MANUSCRITA -->
+    <section class="py-40 px-6 flex justify-center">
+        <div class="max-w-3xl w-full fade-up">
+            <div class="handwritten-letter">
+                <p class="font-script text-5xl text-accent mb-8">Mi Huanuqueñita Hermosa,</p>
+                <div class="font-serif italic text-xl md:text-2xl leading-relaxed text-ink/80 space-y-6">
+                    <p>Hoy celebramos tres meses. Noventa días en los que he descubierto que la felicidad tiene tu nombre y que el hogar no es un sitio, sino la forma en que me miras.</p>
+                    <p>Gracias por dejarme ser parte de tu mundo y por dejarme entrar a tu corazoncito mi amor🥺. Este 21 de enero es solo el prólogo de nuestra historia infinita.</p>
+                    <p>Eres mi presente favorito y el futuro que siempre soñe, quiero verte sonreir cada día, agarrarte de la mano mientras caminamos, quiero estar en cada metas que logres, mientras estemos juntos nada nos va a tumbar.</p>
+                </div>
+                <div class="mt-16 text-right">
+                    <p class="font-script text-6xl text-accent">Te amo con cada particula de mi cuerpo🥹❤️.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CIERRE -->
+    <footer class="py-32 text-center fade-up">
+        <p class="font-serif tracking-[0.5em] text-xs opacity-40 uppercase mb-4">21 Oct 2025 • 21 Ene 2026</p>
+        <div class="font-script text-7xl text-accent">Los Tres Meses Mas Hermosos a tu Lado</div>
+    </footer>
+
+    <script>
+        // Sistema de pétalos
+        const petalsContainer = document.getElementById('petals-container');
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const size = Math.random() * 10 + 5;
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            petal.style.opacity = Math.random() * 0.5 + 0.2;
+            petalsContainer.appendChild(petal);
+            setTimeout(() => petal.remove(), 8000);
+        }
+        setInterval(createPetal, 400);
+
+        // Contador
+        const startDate = new Date(2025, 9, 21);
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+            const abs = Math.abs(diff);
+            document.getElementById('days').innerText = Math.floor(abs / 86400000);
+            document.getElementById('hours').innerText = Math.floor((abs / 3600000) % 24).toString().padStart(2, '0');
+            document.getElementById('mins').innerText = Math.floor((abs / 60000) % 60).toString().padStart(2, '0');
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // MÚSICA NATURAL AL TOCAR
+        let musicStarted = false;
+        function startMusic() {
+            if (!musicStarted) {
+                const music = document.getElementById('bg-music');
+                music.play().then(() => {
+                    musicStarted = true;
+                }).catch(() => {
+                    // Si falla, se intentará de nuevo en el siguiente toque
+                });
+            }
+        }
+    </script>
+</body>
+</html>
